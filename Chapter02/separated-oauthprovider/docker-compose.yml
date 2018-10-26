@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  redis:
+    container_name:  redis
+#     image: redis:alpine
+    image: redis:4.0.11
+    command:
+    - --loglevel warning
+#    volumes:
+#    - $PWD/redis:/var/lib/redis:Z
+    network_mode:  "host"
+    environment:
+       - TZ=Asia/Taipei
+#    ports:
+#      - 6379:6379 

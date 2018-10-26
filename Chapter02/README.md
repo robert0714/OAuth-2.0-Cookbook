@@ -1,4 +1,6 @@
 # Chapter 2  Implementing Your Own OAuth 2.0 Provider
+
+## Protecting resources using the Authorization Code grant type
 p.63 ~ p.70
 
 Chapter02/​auth-​code-​server
@@ -34,7 +36,7 @@ OAuth 2.0
 specification at https:/​/tools.ietf.org/html/rfc6749#section-4.1.1
 
 
-
+## Supporting the Implicit grant type
 p.71 ~ p.75
 
 Chapter02/​implicit-server
@@ -55,7 +57,7 @@ $> curl -X GET http://localhost:8080/api/profile -H "authorization: Bearer 6c3c7
 ```
 
 
-
+## Using the Resource Owner Password Credentials grant type as an approach for OAuth 2.0 migration
 p.76 ~ 80
  
 Chapter02/password-server
@@ -82,7 +84,7 @@ $> curl -X GET http://localhost:8080/api/profile -H "authorization: Bearer 7a7ea
 
 {"name":"adolfo","email":"adolfo@mailinator.com"}[
 ```
-
+## Configuring the Client Credentials grant type
 p.81 ~ p.85
 
 Chapter02/client-credentials-server
@@ -100,7 +102,7 @@ $> curl "http://localhost:8080/user" --user adolfo:123
 
 {"name":"adolfo","email":"adolfo@mailinator.com"}
 ```
-
+## Adding support for refresh tokens
 p.86 ~ p.91
  
 Chapter02/refresh-server
@@ -131,8 +133,8 @@ $ >   curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H 
 {"access_token":"ece51d58-fdba-4090-90bc-db327050447d","token_type":"bearer","refresh_token":"c4d68ff3-bf8d-4710-8d22-531e39de22e4","expires_in":119,"scope":"read_profile"}
 
 ```
-
-p.92 ~ 
+## Using a relational database to store tokens and client details
+p.92 ~ 98
 
 Chapter02/rdbm-server
 
@@ -171,5 +173,49 @@ $ >   curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H 
 ```
 You notice JdbcTokenStore, oauth_client_details.client_secret ( it need to be encoded in BCrypt )
 
-olinne tools 
+online tools 
 https://www.browserling.com/tools/bcrypt
+
+## Using Redis as a token store
+p.99 ~ 103
+
+Chapter02/​redis-​server
+
+To check how *RedisTokenStore* persists the access tokens and related data, start the redis-server application and try to request for an access token using one of the authorized grant types declared, which are Authorization Code and Password Credentials. For practical reasons, I will make the access token request through the Password Credentials, as you can see in the following CURL command:
+
+```
+ $ >  curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H    \
+"accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   \
+"grant_type=password&username=adolfo&password=123&scope=read_profile"
+
+{"access_token":"589964cd-c9c1-4d96-ae2f-5b8974c0da50","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
+
+```
+## Implementing client registration
+p.104 ~ p.115
+
+Chapter02/​oauth2provider
+
+
+To see the client registration process in action, start the application and go to *http://localhost:8080/client/dashboard* so you can see the following page (the application will try to authenticate you, so enter the user credentials that you have set up within the application.properties file):
+
+security.user.name=adolfo
+security.user.password=123
+
+##  Breaking the OAuth 2.0 Provider in the middle
+p.116 ~ p.120
+
+Chapter02/​separated-oauthprovider
+
+```
+curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H    \
+"accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   \
+"grant_type=password&username=adolfo&password=123&scope=read_profile"
+
+```
+
+## Using Gatling to load test the token validation process using shared databases
+p.121 ~ p.129
+
+Chapter02/load-testing
+
