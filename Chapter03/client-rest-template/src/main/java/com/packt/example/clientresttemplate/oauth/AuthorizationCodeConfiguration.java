@@ -1,13 +1,13 @@
 package com.packt.example.clientresttemplate.oauth;
 
 import java.util.Arrays;
-import java.util.Base64;
-
+import java.util.Base64; 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
+@Component
 public class AuthorizationCodeConfiguration {
 
     public String encodeCredentials(String username, String password) {

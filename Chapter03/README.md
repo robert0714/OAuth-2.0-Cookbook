@@ -45,10 +45,12 @@ OAuth 2.0
 specification at https:/​/tools.ietf.org/html/rfc6749#section-4.1.1
 
 
-## Supporting the Implicit grant type
-p.71 ~ p.75
+## Creating an OAuth 2.0 client using the Implicit grant type
+p.142 ~ p.150
 
 Chapter02/​implicit-server
+
+Chapter03/client-​implicit
 
 Open th below url in browser
 
@@ -66,10 +68,12 @@ $> curl -X GET http://localhost:8080/api/profile -H "authorization: Bearer 6c3c7
 ```
 
 
-## Using the Resource Owner Password Credentials grant type as an approach for OAuth 2.0 migration
-p.76 ~ 80
+## Creating an OAuth 2.0 client using the Resource Owner Password Credentials grant type
+p.150 - p.155
  
 Chapter02/password-server
+
+Chapter03/client-​password
 
 Open th below url in browser
 
@@ -93,10 +97,16 @@ $> curl -X GET http://localhost:8080/api/profile -H "authorization: Bearer 7a7ea
 
 {"name":"adolfo","email":"adolfo@mailinator.com"}[
 ```
-## Configuring the Client Credentials grant type
-p.81 ~ p.85
+
+Open th below url in browser
+http://localhost:9000
+
+## Creating an OAuth 2.0 client using the Client Credentials grant type
+p.155 ~ 161
 
 Chapter02/client-credentials-server
+
+Chapter03/client-client-credentials
 
 ```
 $> curl -X POST "http://localhost:8080/oauth/token" --user clientadmin:123 -d  "grant_type=client_credentials&scope=admin"
@@ -111,10 +121,20 @@ $> curl "http://localhost:8080/user" --user adolfo:123
 
 {"name":"adolfo","email":"adolfo@mailinator.com"}
 ```
-## Adding support for refresh tokens
-p.86 ~ p.91
+
+Open th below url in browser
+http://localhost:9000/
  
+
+security.user.name=admin
+security.user.password=123
+
+## Managing refresh tokens on the client side
+p.161 ~ p. 163
 Chapter02/refresh-server
+
+Chapter03/client-refresh-token
+
 
 ```
 $ >  curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token   \
@@ -142,139 +162,15 @@ $ >   curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H 
 {"access_token":"ece51d58-fdba-4090-90bc-db327050447d","token_type":"bearer","refresh_token":"c4d68ff3-bf8d-4710-8d22-531e39de22e4","expires_in":119,"scope":"read_profile"}
 
 ```
-## Using a relational database to store tokens and client details
-p.92 ~ 98
+## Accessing an OAuth 2.0 protected API with RestTemplate
+p.164 ~ p.170
 
-Chapter02/rdbm-server
+Chapter02/auth-code-server
 
-About oauth2 database schema , you can refer
+Chapter03/client-rest-template
 
-https://projects.spring.io/spring-security-oauth/docs/oauth2.html
-
-https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql
-
-https://piotrminkowski.wordpress.com/tag/mysql/
-
-
-Start the application by running the mvn spring-boot:run command and go to the following URL:
-
-http://localhost:8080/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=code&scope=read_profile
-
-and then it would redirect the following URL:
-
-http://localhost:9000/callback?code=Js7SCt
-
-When you as the Resource Owner had approved the clientapp to client access your profile, a row will be created in the oauth_approvals table. Run the following query in your MySQL console to check for a new row.
-
-```
-select * from oauth_approvals;
-```
-
-Now if you request for a new access token by running the following CURL command, you will receive a new access token generating a new row into the oauth_access_token table:
-
-```
-$ >   curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H  \
-"content-type: application/x-www-form-urlencoded" -d   \
-"code=Js7SCtS&grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read_profile"
-
-{"access_token":"d85a5cfb-f7ce-4fb9-bd13-aa8206635a9b","token_type":"bearer","expires_in":2999,"scope":"read_profile"}
-
-```
-You notice JdbcTokenStore, oauth_client_details.client_secret ( it need to be encoded in BCrypt )
-
-online tools 
-https://www.browserling.com/tools/bcrypt
-
-## Using Redis as a token store
-p.99 ~ 103
-
-Chapter02/​redis-​server
-
-To check how *RedisTokenStore* persists the access tokens and related data, start the redis-server application and try to request for an access token using one of the authorized grant types declared, which are Authorization Code and Password Credentials. For practical reasons, I will make the access token request through the Password Credentials, as you can see in the following CURL command:
-
-```
- $ >  curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H    \
-"accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   \
-"grant_type=password&username=adolfo&password=123&scope=read_profile"
-
-{"access_token":"589964cd-c9c1-4d96-ae2f-5b8974c0da50","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
-
-```
-## Implementing client registration
-p.104 ~ p.115
-
-Chapter02/​oauth2provider
-
-
-To see the client registration process in action, start the application and go to *http://localhost:8080/client/dashboard* so you can see the following page (the application will try to authenticate you, so enter the user credentials that you have set up within the application.properties file):
-
-security.user.name=adolfo
-security.user.password=123
-
-##  Breaking the OAuth 2.0 Provider in the middle
-p.116 ~ p.120
-
-Chapter02/​separated-oauthprovider
-
-Same as authoriaztion_code ,password grandtypes
-
-### authoriaztion_code
 Open th below url in browser
+ http://localhost:9000/dashboard
 
-http://localhost:8080/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=code&scope=read_profile
-
-security.user.name=adolfo
-security.user.password=123
-
-and then redirect the below url
-
-http://localhost:9000/callback?code=l1kgc3
-
-```
-$> curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H  \
-"content-type: application/x-www-form-urlencoded" -d  \
-"code=l1kgc3&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback&scope=read_profile"
-
-{"access_token":"abcd35cb-3b7d-438f-b1e4-2fd699d02f7b","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
-
-//by sending a request using port 8081
-$> curl -X GET http://localhost:8081/api/profile -H "authorization: Bearer abcd35cb-3b7d-438f-b1e4-2fd699d02f7b"
-
-{"name":"adolfo","email":"adolfo@mailinator.com"}
-
-```
-### password
-Open th below url in browser
-
-http://localhost:8080/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=token&scope=read_profile&state=xyz
-
-and then redirect the below url
-
-OAuth Error
-error="invalid_grant", error_description="A redirect_uri can only be used by implicit or authorization_code grant types."
-
-
-You could find th method is not get method ,so tou could not use browser
-
-
-```
-$> curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H "accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   "grant_type=password&username=adolfo&password=123&scope=read_profile"
-
-{"access_token":"7a7ea3f8-a207-4a2c-b168-d3814fc5be36","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
-
-//by sending a request using port 8081
-$> curl -X GET http://localhost:8081/api/profile -H "authorization: Bearer 7a7ea3f8-a207-4a2c-b168-d3814fc5be36"
-
-{"name":"adolfo","email":"adolfo@mailinator.com"}[
-```
-
-
-## Using Gatling to load test the token validation process using shared databases
-p.121 ~ p.129
-
-Chapter02/load-testing
-
-```
-load-testing]$ mvn clean scala:compile compile gatling:execute
-```
-
+clientdb.client_user.username=aeloy
+clientdb.client_user.password=abc
