@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  mysqldb:
+    container_name: mysql57-clientdb
+    image: mysql/mysql-server:5.7.24-1.1.8
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ${PWD}/data/mysql:/var/lib/mysql
+    - ${PWD}/my55.cnf:/etc/my.cnf
+    - ${PWD}/temp_my.cnf.j2:/.my.cnf
+    environment:
+    - MYSQL_ROOT_PASSWORD=123
+    - MYSQL_DATABASE=clientdb
+    - MYSQL_USER=clientdb
+    - MYSQL_PASSWORD=123
+    - EXTRA_OPTS="--lower_case_table_names=1"
+    - TZ=Asia/Taipei
+    network_mode:  "host"
