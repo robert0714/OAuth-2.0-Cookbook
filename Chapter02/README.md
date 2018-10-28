@@ -207,15 +207,65 @@ p.116 ~ p.120
 
 Chapter02/​separated-oauthprovider
 
-```
-curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H    \
-"accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   \
-"grant_type=password&username=adolfo&password=123&scope=read_profile"
+Same as authoriaztion_code ,password grandtypes
+
+### authoriaztion_code
+Open th below url in browser
+
+http://localhost:8080/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=code&scope=read_profile
+
+security.user.name=adolfo
+security.user.password=123
+
+and then redirect the below url
+
+http://localhost:9000/callback?code=l1kgc3
 
 ```
+$> curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H  \
+"content-type: application/x-www-form-urlencoded" -d  \
+"code=l1kgc3&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback&scope=read_profile"
+
+{"access_token":"abcd35cb-3b7d-438f-b1e4-2fd699d02f7b","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
+
+//by sending a request using port 8081
+$> curl -X GET http://localhost:8081/api/profile -H "authorization: Bearer abcd35cb-3b7d-438f-b1e4-2fd699d02f7b"
+
+{"name":"adolfo","email":"adolfo@mailinator.com"}
+
+```
+### password
+Open th below url in browser
+
+http://localhost:8080/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=token&scope=read_profile&state=xyz
+
+and then redirect the below url
+
+OAuth Error
+error="invalid_grant", error_description="A redirect_uri can only be used by implicit or authorization_code grant types."
+
+
+You could find th method is not get method ,so tou could not use browser
+
+
+```
+$> curl -X POST --user clientapp:123456 http://localhost:8080/oauth/token -H "accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d   "grant_type=password&username=adolfo&password=123&scope=read_profile"
+
+{"access_token":"7a7ea3f8-a207-4a2c-b168-d3814fc5be36","token_type":"bearer","expires_in":43199,"scope":"read_profile"}
+
+//by sending a request using port 8081
+$> curl -X GET http://localhost:8081/api/profile -H "authorization: Bearer 7a7ea3f8-a207-4a2c-b168-d3814fc5be36"
+
+{"name":"adolfo","email":"adolfo@mailinator.com"}[
+```
+
 
 ## Using Gatling to load test the token validation process using shared databases
 p.121 ~ p.129
 
 Chapter02/load-testing
+
+```
+load-testing]$ mvn clean scala:compile compile gatling:execute
+```
 
