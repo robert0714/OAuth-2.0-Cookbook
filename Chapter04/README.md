@@ -171,4 +171,35 @@ It allows for dynamic client registration through the endpoint
 
 It protect the user's resource through OAuth 2.0
 
+```
+$>  curl -X POST http://localhost:8080/register -H  \
+"Content-Type:application/json" -d "{\"software_id\":\
+\"f6b35c96-50ab61\",\"client_name\":\"flavio\",\"client_uri\":\
+\"http://localhost:9000\",\"scope\": \"read_profile,\
+write_profile\",\"grant_types\": [\"authorization_code\",\
+\"implicit\"],\"redirect_uris\": [\"http://localhost:9000/callback\"]}"
+ 
+ 
+{  
+   "scope":"read_profile,write_profile",
+   "redirect_uris":[  
+      "http://localhost:9000/callback"
+   ],
+   "token_endpoint_auth_method":"client_secret_basic",
+   "grant_types":[  
+      "implicit",
+      "authorization_code"
+   ],
+   "response_types":[  
+      "code",
+      "token"
+   ],
+   "client_name":"flavio",
+   "client_uri":"http://localhost:9000",
+   "software_id":"f6b35c96-50ab61",
+   "client_id":"4h1jc7hnuj",
+   "client_secret":"nf3h4736p2g47u04jj045gnitoj423pk",
+   "client_secret_expires_at":1543395079
+}
 
+```
