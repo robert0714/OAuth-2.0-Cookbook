@@ -10,8 +10,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
-		<scalaVersion>2.11.0</scalaVersion>
+		<scala-maven-plugin.version>3.4.2</scala-maven-plugin.version>
+		<scalaVersion>2.11.12</scalaVersion>
 
 		<!-- gatling properties -->
 		<gatling-plugin.version>2.2.4</gatling-plugin.version>
@@ -45,19 +45,20 @@
 		<dependency>
 			<groupId>io.gatling</groupId>
 			<artifactId>gatling-app</artifactId>
-			<version>2.2.5</version>
+			<version>${gatlingVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.gatling</groupId>
 			<artifactId>gatling-recorder</artifactId>
-			<version>2.2.5</version>
+			<version>${gatlingVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.gatling.highcharts</groupId>
 			<artifactId>gatling-charts-highcharts</artifactId>
-			<version>2.2.5</version>
+			<version>${gatlingVersion}</version>
 		</dependency>
 
+		<!-- HTTP client to ease the access_token request building -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -73,14 +74,25 @@
 	<build>
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<plugins>
+
+			<!-- This plugin compiles Scala files -->
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>${scala-maven-plugin.version}</version>
 				<executions>
 					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
 						<goals>
+							<goal>add-source</goal>
 							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
 							<goal>testCompile</goal>
 						</goals>
 					</execution>
