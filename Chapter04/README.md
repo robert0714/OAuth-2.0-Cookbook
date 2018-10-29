@@ -203,3 +203,5 @@ write_profile\",\"grant_types\": [\"authorization_code\",\
 }
 
 ```
+
+You can see new data in database data,oauth2provider.oauth_client_details.
