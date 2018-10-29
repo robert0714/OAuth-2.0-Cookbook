@@ -145,7 +145,7 @@ Open th below url in browser
 http://localhost:9000
 
 ## Using Gatling to load test remote token validation
-p.188
+p.188 ~ p.192
 
 Chapter04/​remote-validation/remote-authserver
 Chapter04/​remote-validation/remote-resource
@@ -157,4 +157,18 @@ load-testing-remote]$ mvn clean scala:compile compile gatling:execute
 ```
 
 Then change the property server.port from the 8081 to 8082 from  *cache-introspection* project.
+
+## Dynamic client registration
+p.193 ~ p.205
+
+Chapter04/dynamic-server
+
+It allows for the resource owner to be authenticated
+It allows for the resource owner to grant permissions for third-party application to access its resources
+It allows for dynamic client registration through the endpoint
+
+*http://localhost:8080/register*
+
+It protect the user's resource through OAuth 2.0
+
 
