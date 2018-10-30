@@ -36,6 +36,7 @@ https://www.jsonwebtoken.io/
 p.211 ~ p.215
 
 Chapter05/symmetric/auth-server-jwt
+
 Chapter05/symmetric/resource-server-jwt
 
 https://tools.ietf.org/html/rfc7519
@@ -56,6 +57,7 @@ $> curl -X POST --user clientapp:123456   \
 }
 ```
 https://www.base64decode.org/
+
 https://www.jsonwebtoken.io/
 
 ```
@@ -112,6 +114,7 @@ $> curl -X POST --user clientapp:123456   \
 
 ```
 https://www.base64decode.org/
+
 https://www.jsonwebtoken.io/
 
 ```
@@ -156,6 +159,7 @@ $>  curl http://localhost:8080/oauth/token_key
 
 ```
 https://www.base64decode.org/
+
 https://www.jsonwebtoken.io/
 
 
@@ -164,6 +168,7 @@ https://www.jsonwebtoken.io/
 p.225 ~ p.227
 
 Chapter05/asymmetric/jwt-asymmetric-resource
+
 Chapter05/asymmetric/jwt-asymmetric-server
 
 ```
@@ -196,6 +201,7 @@ $> curl -X GET http://localhost:8081/api/profile -H "authorization:Bearer eyJhbG
 p.228 ~ p.234
 
 Chapter05/jwe/jwe-resource
+
 Chapter05/jwe/jwe-server
 
 ```
@@ -234,6 +240,7 @@ use  https://www.jsonwebtoken.io/
 p.234 ~ p.239
 
 Chapter05/jwe/jwe-resource
+
 Chapter05/jwe/jwe-server
 
 ```
@@ -258,8 +265,9 @@ $> curl -X GET http://localhost:8081/api/profile -H "authorization:Bearer eyJlbm
 ```
 
 ## Using proof-of-possession key semantics on OAuth 2.0 Provider
-
+<驗證未完成>
 p.240 ~ p.248
+
 Chapter05/pop/pop-server 
 
 https://tools.ietf.org/html/rfc7800
@@ -270,9 +278,12 @@ https://tools.ietf.org/html/rfc7800
 
 
 ## Using proof-of-possession key semantics on OAuth 2.0 Provider
+<驗證未完成>
 
 p.249 ~ p.257
+
 Chapter05/pop/pop-server
+
 Chapter05/pop/pop-client
 
 Open th below url in browser
