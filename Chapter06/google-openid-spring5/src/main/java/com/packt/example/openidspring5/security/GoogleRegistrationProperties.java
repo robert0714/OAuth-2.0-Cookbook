@@ -1,11 +1,13 @@
 package com.packt.example.openidspring5.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("security.oauth2.client.google")
+@Order(1)
 public class GoogleRegistrationProperties {
 
     private String clientId;
