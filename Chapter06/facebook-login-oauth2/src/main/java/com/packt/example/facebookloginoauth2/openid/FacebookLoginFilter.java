@@ -45,16 +45,25 @@ public class FacebookLoginFilter extends AbstractAuthenticationProcessingFilter 
 
     private final AntPathRequestMatcher localMatcher;
 
-    public FacebookLoginFilter(
-        @Value("${facebook.filter.callback-uri}") String callbackUri,
-        @Value("${facebook.filter.api-base-uri}")String apiBaseUri) {
-        super(new OrRequestMatcher(
-            new AntPathRequestMatcher(callbackUri),
-            new AntPathRequestMatcher(apiBaseUri)
-        ));
-        this.localMatcher = new AntPathRequestMatcher(apiBaseUri);
-        setAuthenticationManager(new NoopAuthenticationManager());
-    }
+//    public FacebookLoginFilter(
+//        @Value("${facebook.filter.callback-uri:/callback}") String callbackUri,
+//        @Value("${facebook.filter.api-base-uri:/profile*/*}")String apiBaseUri) {
+//        super(new OrRequestMatcher(
+//            new AntPathRequestMatcher(callbackUri),
+//            new AntPathRequestMatcher(apiBaseUri)
+//        ));
+//        this.localMatcher = new AntPathRequestMatcher(apiBaseUri);
+//        setAuthenticationManager(new NoopAuthenticationManager());
+//    }
+    @Autowired
+    public FacebookLoginFilter(FacebookFilterProperties properties ) {
+            super(new OrRequestMatcher(
+                new AntPathRequestMatcher(properties.getCallbackUri()),
+                new AntPathRequestMatcher(properties.getApiBaseUri())
+            ));
+            this.localMatcher = new AntPathRequestMatcher(properties.getApiBaseUri());
+            setAuthenticationManager(new NoopAuthenticationManager());
+        }
 
     private static class NoopAuthenticationManager implements AuthenticationManager {
         public Authentication authenticate(Authentication authentication)
