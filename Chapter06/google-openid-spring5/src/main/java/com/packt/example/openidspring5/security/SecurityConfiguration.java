@@ -19,7 +19,6 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
