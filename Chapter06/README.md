@@ -52,7 +52,9 @@ I encountered  the same situation as the former case . Maybe I need to wait one 
 ## Using Google OpenID Connect with Spring Security 5
  
 
-p.290
+p.290 ~p.295
+
+Chapter06/google-openid-spring5
 
 Go to the Google Developers Console located at 
 https://console.developers.google.com
@@ -72,7 +74,25 @@ In the "Set a redirect URI" sub-section, ensure that the *Authorized redirect UR
  
 
 
-## reference
+### reference
 https://qiita.com/kazuki43zoo/items/53804e18337933a77ad0
 
 https://github.com/spring-projects/spring-security/tree/master/samples/boot/oauth2login
+
+
+## Using Microsoft and Google OpenID providers together with Spring Security 5
+
+p.296 ~ 302
+
+Chapter06/microsoft-login
+
+You can see how to register an application on Microsoft Azure as well as how to create credentials by reading the official documentation at 
+*https://docs.microsoft.​com/​en-us/azure/​active-directory/​develop/active-​directory-​integrating-​applications* .
+
+https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v1-add-azure-ad-app
+
+https://docs.microsoft.com/en-us/azure/active-directory/develop/vs-active-directory-add-connected-service
+
+
+Microsoft service not free
+
