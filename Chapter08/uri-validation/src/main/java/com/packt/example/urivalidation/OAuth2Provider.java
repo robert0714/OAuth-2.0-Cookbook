@@ -19,7 +19,8 @@ public class OAuth2Provider {
             clients.inMemory()
                     .withClient("clientapp").secret("123")
                     .scopes("read", "write")
-                    .redirectUris("http://localhost:9000/callback")
+                    .redirectUris("http://localhost:9000/callback")//spring-security-oauth2 2.3.4.RELEASE必須加入
+                    .redirectUris("http://localhost:9000/malicious")//spring-security-oauth2 2.3.4.RELEASE必須加入
                     .authorizedGrantTypes("implicit");
         }
 

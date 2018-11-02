@@ -18,7 +18,9 @@ public class OAuthConfiguration {
             clients.inMemory()
                 .withClient("clientapp").secret("123")
                 .scopes("read_x", "read_y")
-                .authorizedGrantTypes("authorization_code");
+                .authorizedGrantTypes("authorization_code")
+                .redirectUris("http://localhost:9000/callback")//spring-security-oauth2 2.3.4.RELEASE與2.2.0.RELEASE的最大差異
+                ;
         }
     }
 

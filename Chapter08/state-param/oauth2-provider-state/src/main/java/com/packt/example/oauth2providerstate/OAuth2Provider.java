@@ -19,7 +19,9 @@ public class OAuth2Provider {
             clients.inMemory()
                 .withClient("clientapp").secret("123")
                 .scopes("read", "write")
-                .authorizedGrantTypes("authorization_code");
+                .authorizedGrantTypes("authorization_code")
+                .redirectUris("http://localhost:9000/resource")//spring-security-oauth2 2.3.4.RELEASE與2.2.0.RELEASE的最大差異
+                ;
         }
 
     }
