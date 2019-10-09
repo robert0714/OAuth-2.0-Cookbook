@@ -12,7 +12,7 @@ Friends who has also granted client-implicit
 </body>
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 $(document).ready(function() {
@@ -52,7 +52,7 @@ function getResponse(fragment) {
 }
 
 function getFriends(accessToken, callback) {
-	var baseUrl = 'https://graph.facebook.com/v2.9/';
+	var baseUrl = 'https://graph.facebook.com/v4.0/';
 	var endpoint ='me/friends';
 	var url = baseUrl + endpoint;
 
